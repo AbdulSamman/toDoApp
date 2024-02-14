@@ -11,7 +11,7 @@ export const DateAndTime = () => {
     return () => clearInterval(timer);
   }, []);
   const dateOptions: any = {
-    weekday: "long",
+    weekday: "short",
     year: "numeric",
     month: "numeric",
     day: "numeric",
@@ -20,7 +20,9 @@ export const DateAndTime = () => {
   return (
     <div>
       <h2>{currentTime.toLocaleDateString(undefined, dateOptions)}</h2>
-      <p>{currentTime.toLocaleTimeString()}</p>
+      <span>
+        <i>{currentTime.toLocaleTimeString()}</i>
+      </span>
     </div>
   );
 };
