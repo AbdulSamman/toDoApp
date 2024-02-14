@@ -1,21 +1,33 @@
 import "./App.scss";
 import { useState } from "react";
-
+import ToDo from "./components/notes";
 function App() {
   const [userName, setuserName] = useState("");
   const [showInput, setShowInput] = useState(false);
 
   const handleUserName = () => {
-    setShowInput(true);
+    const trimuserName = userName.trim();
+    if (trimuserName.length === 0) {
+      return;
+    } else {
+      setShowInput(true);
+    }
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      setShowInput(true);
+    }
   };
 
   return (
     <div className="App">
       {!showInput && (
-        <div className="userName">
+        <div className="row">
           <label>Enter your name</label>
-          <div>
+          <div className="userName">
             <input
+              onKeyDown={handleKeyPress}
               type="text"
               value={userName}
               onChange={(e) => setuserName(e.target.value)}
@@ -25,8 +37,11 @@ function App() {
         </div>
       )}
 
-      {showInput && userName !== "" && userName.length > 0 && (
-        <h1>{userName}’s ToDo List</h1>
+      {showInput && (
+        <div>
+          <h1>{userName}’s ToDo List</h1>
+          <ToDo />
+        </div>
       )}
     </div>
   );
