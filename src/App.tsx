@@ -1,6 +1,8 @@
 import "./App.scss";
 import { useState } from "react";
-import ToDo from "./components/notes";
+import ToDo from "./components/toDo";
+import { DateAndTime } from "./components/date";
+
 function App() {
   const [userName, setuserName] = useState("");
   const [showInput, setShowInput] = useState(false);
@@ -23,9 +25,9 @@ function App() {
   return (
     <div className="App">
       {!showInput && (
-        <div className="row">
+        <div className="userNameField">
           <label>Enter your name</label>
-          <div className="userName">
+          <div className="row">
             <input
               onKeyDown={handleKeyPress}
               type="text"
@@ -36,13 +38,15 @@ function App() {
           </div>
         </div>
       )}
-
-      {showInput && (
-        <div>
-          <h1>{userName}’s ToDo List</h1>
-          <ToDo />
-        </div>
-      )}
+      <div className="toDoList">
+        {showInput && (
+          <div>
+            <h1 className="welcomeUserName">{userName}’s ToDo List</h1>
+            <DateAndTime />
+            <ToDo />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -36,7 +36,7 @@ const ToDo = () => {
 
       <div>
         <pre>
-          {toTosList.map((toDoList: any, index) => {
+          {toTosList.map((toDoList: ItoDo, index) => {
             return (
               <div key={index}>
                 <p>{toDoList.toDoText}</p>
