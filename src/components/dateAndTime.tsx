@@ -10,17 +10,18 @@ export const DateAndTime = () => {
 
     return () => clearInterval(timer);
   }, []);
+
   const dateOptions: any = {
     weekday: "short",
     year: "numeric",
-    month: "numeric",
-    day: "numeric",
+    month: "2-digit",
+    day: "2-digit",
   };
 
   return (
-    <div>
+    <div className="flex justify-between items-center">
       <h2>{currentTime.toLocaleDateString(undefined, dateOptions)}</h2>
-      <span>
+      <span className="text-gray-700">
         <i>{currentTime.toLocaleTimeString()}</i>
       </span>
     </div>

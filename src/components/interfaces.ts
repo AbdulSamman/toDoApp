@@ -1,5 +1,7 @@
 export interface ItoDo{
-    toDoText:string
+    toDoText:string,
+    setDate:string
+
 }
- 
- 
+
+
