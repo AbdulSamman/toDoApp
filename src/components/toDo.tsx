@@ -75,6 +75,13 @@ const ToDo = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
   };
+  // delete toDo with index
+  const handleDeleteToDo = (index: number) => {
+    const updatedToDoList = [...toTosList];
+    updatedToDoList.splice(index, 1);
+    setToDoList(updatedToDoList);
+    localStorage.setItem("toDo-list-app", JSON.stringify(updatedToDoList));
+  };
 
   return (
     <div className="toDo">
@@ -121,7 +128,10 @@ const ToDo = () => {
                   <div className="flex text-2xl items-center gap-2">
                     <IoIosCheckmark className="text-5xl text-orange-300" />
                     <FaEdit className=" text-blue-700" />
-                    <MdDelete className=" text-red-800" />
+                    <MdDelete
+                      className=" text-red-800 cursor-pointer"
+                      onClick={() => handleDeleteToDo(index)}
+                    />
                   </div>
                 </div>
               </div>
