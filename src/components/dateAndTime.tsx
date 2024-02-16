@@ -20,8 +20,10 @@ export const DateAndTime = () => {
 
   return (
     <div className="flex justify-between items-center">
-      <h2>{currentTime.toLocaleDateString(undefined, dateOptions)}</h2>
-      <span className="text-gray-700">
+      <h2 className="text-teal-500 text-lg">
+        {currentTime.toLocaleDateString(undefined, dateOptions)}
+      </h2>
+      <span className="text-gray-400 text-sm">
         <i>{currentTime.toLocaleTimeString()}</i>
       </span>
     </div>

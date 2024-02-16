@@ -1,8 +1,11 @@
-.toDo {
-  width: 100vw;
-  height: f;
-  .toDos {
-    background-color: rgba(137, 207, 240, 0.3);
-    border: 2px solid #111942;
+.toDos {
+  width: 100%;
+  .toDo {
+    font-family: "Protest Riot", sans-serif;
+    margin-top: 10px;
+    background-color: rgba(178, 108, 235, 0.432);
+    border: 2px solid #9388a2;
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 }

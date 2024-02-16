@@ -31,32 +31,30 @@ function App() {
   return (
     <div className="App">
       {!showInput && (
-        <div className="userNameField">
-          <div className="row">
-            <div>
-              <input
-                placeholder="Enter your name . . ."
-                onKeyDown={(e) => handleUserName(e)}
-                type="text"
-                value={userName}
-                onChange={(e) => setuserName(e.target.value)}
-                className="focus:border-blue-500 border-2"
-              />
-            </div>
+        <div className="row">
+          <>
+            <input
+              placeholder="Enter your name . . ."
+              onKeyDown={(e) => handleUserName(e)}
+              type="text"
+              value={userName}
+              onChange={(e) => setuserName(e.target.value)}
+            />
 
             <button
               onClick={handleUserName}
-              className="bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold border border-blue-700 rounded p-2 px-4 ml-2">
+              className="bg-purple-500 hover:bg-purple-700 text-gray-200 font-bold border border-purple-700 rounded p-2 px-4 ml-2 text-purple-900">
               Begin
             </button>
-          </div>
+          </>
         </div>
       )}
-      <div className="toDoList">
-        {showInput && (
+
+      {showInput && (
+        <div className="toDoList">
           <>
             <div className="m-3">
-              <h1 className="welcomeUserName text-red-500 text-4xl">
+              <h1 className="welcomeUserName text-red-500 text-4xl mb-2 text-center">
                 {userName}
                 <span className="text-lg">’s ToDo List</span>
               </h1>
@@ -66,8 +64,8 @@ function App() {
               <ToDo />
             </div>
           </>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
