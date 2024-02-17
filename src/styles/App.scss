@@ -70,9 +70,9 @@ body {
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-      // background-image: url("../images/calender.svg");
-      // background-position: center;
-      // background-size: contain;
+      background-image: url("../calender.svg");
+      background-position: center;
+      background-size: contain;
 
       background-color: rgba($color: rgb(42, 136, 89), $alpha: 0.7);
       border-radius: 5px;
