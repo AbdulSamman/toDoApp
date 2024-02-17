@@ -1,11 +1,9 @@
-import { useReducer } from "react";
 import { useState, useEffect } from "react";
 import { ItoDo } from "./interfaces";
 import "../styles/toDo.scss";
 import { MdDeleteForever } from "react-icons/md";
 import { TiDelete } from "react-icons/ti";
-
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaSave } from "react-icons/fa";
 import { IoIosCheckmark } from "react-icons/io";
 import { CgAddR } from "react-icons/cg";
 
@@ -18,7 +16,7 @@ const _addToDo: ItoDo = {
 const ToDo = () => {
   const [addToDo, setAddToDo] = useState(_addToDo);
   const [toDosList, setToDoList] = useState<ItoDo[]>([]);
-
+  const [editToDoIndex, setEditToDoIndex] = useState<number | null>(null);
   //localstorage
   useEffect(() => {
     const localStorageToDo = localStorage.getItem("toDo-list-app");
@@ -41,32 +39,6 @@ const ToDo = () => {
     setAddToDo({ ...addToDo, [fieldName]: value });
   };
 
-  const handleSaveToDO = (e: any) => {
-    if (e.key === "Enter" || e.type === "click") {
-      if (addToDo.toDoText.trim() !== "") {
-        setToDoList(
-          [...toDosList, addToDo].sort((a: ItoDo, b: ItoDo) =>
-            a.setDate.localeCompare(b.setDate)
-          )
-        );
-
-        //einzeln leeren
-        //setAddToDo({ toDoText: "" });
-        setAddToDo({ ..._addToDo });
-      }
-    }
-    //////
-    if (!addToDo.setDate) {
-      const today = new Date().toLocaleDateString("en-CA", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      });
-
-      console.log("yes");
-      setAddToDo({ ...addToDo, setDate: today });
-    }
-  };
   //date formatierun
   const formatDate = (dateString: string) => {
     const options: any = {
@@ -79,6 +51,38 @@ const ToDo = () => {
     const date = new Date(dateString);
     return date.toLocaleDateString(undefined, options);
   };
+
+  //task finished
+  //soll vor dem handleSaveToDo sein umsicherzustellen dass eingefügte element am anfang des array ist, und duchgestrichenen task am ende des arrays ist
+  const handelDidTask = (index: number) => {
+    const updatedToDoList = [...toDosList];
+    updatedToDoList[index].didTask = true;
+
+    // Entferne die Aufgabe aus der Liste
+    const completedTask = updatedToDoList.splice(index, 1)[0];
+
+    // Füge die durchgestrichene Aufgabe am Ende der Liste wieder hinzu
+    updatedToDoList.push(completedTask);
+    setToDoList(updatedToDoList);
+
+    console.log("yes");
+  };
+
+  const handleSaveToDo = (e: any) => {
+    if (e.key === "Enter" || e.type === "click") {
+      if (addToDo.toDoText.trim() !== "") {
+        const sortiertedList = [addToDo, ...toDosList].sort(
+          (b: ItoDo, a: ItoDo) => b.setDate.localeCompare(a.setDate)
+        );
+        setToDoList(sortiertedList);
+
+        //einzeln leeren
+        //setAddToDo({ toDoText: "" });
+        setAddToDo({ ..._addToDo });
+      }
+    }
+  };
+
   // delete toDo with index
   const handleDeleteToDo = (index: number) => {
     const updatedToDoList = [...toDosList];
@@ -89,22 +93,41 @@ const ToDo = () => {
 
   //delete all
   const handleDeleteToDos = () => {
-    localStorage.removeItem("toDo-list-app");
-    window.location.reload();
+    const confirmDelete = window.confirm(
+      "Are you sure, that you want to delete all?"
+    );
+    if (confirmDelete) {
+      localStorage.removeItem("toDo-list-app");
+      window.location.reload();
+    }
   };
-  //task finished
-  const handelDidTask = (index: number) => {
+
+  //editing
+
+  const handleEditToDo = (index: number, newText: string) => {
     const updatedToDoList = [...toDosList];
-    updatedToDoList[index].didTask = true;
+    updatedToDoList[index].toDoText = newText;
     setToDoList(updatedToDoList);
-    console.log("yes");
+  };
+
+  const openEditTask = (index: number) => {
+    setEditToDoIndex(index);
+  };
+  const closeEditTask = () => {
+    setEditToDoIndex(null);
+  };
+
+  //änderung speichern
+  const handleSaveEdit = (index: number, newText: string) => {
+    handleEditToDo(index, newText);
+    setEditToDoIndex(null);
   };
 
   return (
     <div className="toDos">
       <div className="row">
         <input
-          onKeyDown={(e) => handleSaveToDO(e)}
+          onKeyDown={(e) => handleSaveToDo(e)}
           type="text"
           value={addToDo.toDoText}
           onChange={(e) => handleAddToDo(e, "toDoText")}
@@ -119,13 +142,13 @@ const ToDo = () => {
           />
 
           <button
-            onClick={handleSaveToDO}
+            onClick={handleSaveToDo}
             className="bg-purple-600 hover:bg-purple-700 text-white p-2  border border-purple-700 rounded">
             <CgAddR className="text-xl" />
           </button>
-          <div className="text-white cursor-pointer bg-red-500 border border-red-700 hover:bg-red-700 rounded flex justify-center items-center p-1">
-            <MdDeleteForever onClick={handleDeleteToDos} className="text-3xl" />
-          </div>
+          <button className="text-white cursor-pointer bg-red-500 border border-red-600 hover:bg-red-700 rounded flex justify-center items-center p-1.5">
+            <MdDeleteForever onClick={handleDeleteToDos} className="text-2xl" />
+          </button>
         </div>
       </div>
 
@@ -137,27 +160,59 @@ const ToDo = () => {
                 <div
                   className="flex
                  justify-between items-center p-2 mr-2">
-                  <div>
+                  <div className="w-full">
                     <p className="text-sm italic text-white">
-                      {formatDate(toDoList.setDate)}
+                      {toDoList.setDate
+                        ? formatDate(toDoList.setDate)
+                        : "ToDay"}
                     </p>
-                    <p
-                      className={`text-xl font-bold text-purple-900 ${
-                        toDoList.didTask ? "line-through text-purple-400" : ""
-                      }`}>
-                      {toDoList.toDoText}
-                    </p>
+                    {editToDoIndex === index ? (
+                      <input
+                        type="text"
+                        value={toDoList.toDoText}
+                        onChange={(e) => handleEditToDo(index, e.target.value)}
+                      />
+                    ) : (
+                      <p
+                        className={`text-xl font-bold  ${
+                          toDoList.didTask
+                            ? "line-through text-purple-400"
+                            : "text-purple-900"
+                        }`}>
+                        {toDoList.toDoText}
+                      </p>
+                    )}
                   </div>
                   <div className="flex text-2xl items-center gap-2">
-                    <IoIosCheckmark
-                      className={`text-5xl text-orange-700 cursor-pointer`}
-                      onClick={() => handelDidTask(index)}
-                    />
-                    <FaEdit className=" text-blue-900 cursor-pointer" />
-                    <TiDelete
-                      className=" text-red-800 cursor-pointer"
-                      onClick={() => handleDeleteToDo(index)}
-                    />
+                    {editToDoIndex === index ? (
+                      <>
+                        <FaSave
+                          className=" text-blue-900 cursor-pointer"
+                          onClick={() => {
+                            handleSaveEdit(index, toDoList.toDoText);
+                          }}
+                        />
+                        <TiDelete
+                          className=" text-red-800 cursor-pointer"
+                          onClick={closeEditTask}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <IoIosCheckmark
+                          className={`text-5xl text-orange-700 cursor-pointer`}
+                          onClick={() => handelDidTask(index)}
+                        />
+                        <FaEdit
+                          className=" text-blue-900 cursor-pointer"
+                          onClick={() => openEditTask(index)}
+                        />
+                        <TiDelete
+                          className=" text-red-800 cursor-pointer"
+                          onClick={() => handleDeleteToDo(index)}
+                        />
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
