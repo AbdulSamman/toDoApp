@@ -204,7 +204,7 @@ const ToDo = () => {
                           onClick={() => handelDidTask(index)}
                         />
                         <FaEdit
-                          className=" text-blue-900 cursor-pointer"
+                          className="text-blue-900 cursor-pointer"
                           onClick={() => openEditTask(index)}
                         />
                         <TiDelete
