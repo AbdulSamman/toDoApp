@@ -70,10 +70,6 @@ body {
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-      background-image: url("../images/calender.svg");
-      background-position: center;
-      background-size: contain;
-
       background-color: rgba($color: rgb(42, 136, 89), $alpha: 0.7);
       border-radius: 5px;
       background-color: rgba($color: rgb(109, 230, 169), $alpha: 0.8);
