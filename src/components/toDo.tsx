@@ -17,6 +17,7 @@ const ToDo = () => {
   const [addToDo, setAddToDo] = useState(_addToDo);
   const [toDosList, setToDoList] = useState<ItoDo[]>([]);
   const [editToDoIndex, setEditToDoIndex] = useState<number | null>(null);
+
   //localstorage
   useEffect(() => {
     const localStorageToDo = localStorage.getItem("toDo-list-app");
