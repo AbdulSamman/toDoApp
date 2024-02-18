@@ -11,6 +11,7 @@
 }
 html {
   height: 100%;
+
   background-color: #341948;
   background-size: cover;
 }
@@ -30,7 +31,8 @@ body {
     .toDoList {
       height: 100%;
       overflow: visible;
-      width: 80%;
+      width: 100%;
+      margin: 0 0.5rem;
       .welcomeUserName {
         font-weight: bold;
         &::first-letter {
@@ -63,26 +65,26 @@ body {
     input[type="date"] {
       font-size: 20px;
       //   background-color: rgba($color: red, $alpha: 0.5);
-      background-color: transparent;
+      background-color: rgb(107, 50, 129);
+      padding: 2px 5px;
+      border-radius: 3px;
     }
+
     input[type="date"]::-webkit-datetime-edit {
-      display: none;
+      //display: none;
+      color: rgb(155, 139, 139);
     }
 
     input[type="date"]::-webkit-calendar-picker-indicator {
-      background-image: url("../calender.svg");
-      background-position: center;
-      background-size: contain;
+      cursor: pointer;
+      // background-image: url("../calender.svg");
+      // background-position: center;
+      // background-size: contain;
+      //background-color: rgba($color: rgb(42, 136, 89), $alpha: 0.7);
 
-      background-color: rgba($color: rgb(42, 136, 89), $alpha: 0.7);
-      border-radius: 5px;
-      background-color: rgba($color: rgb(109, 230, 169), $alpha: 0.8);
-      padding: 0.5rem;
-
-      &:hover {
-        cursor: pointer;
-        background-color: rgba($color: rgb(42, 136, 89), $alpha: 0.7);
-      }
+      // border-radius: 5px;
+      // background-color: rgba($color: rgb(109, 230, 169), $alpha: 0.8);
+      // padding: 0.5rem;
     }
   }
 }
