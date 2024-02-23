@@ -144,7 +144,7 @@ const ToDo = () => {
 
           <button
             onClick={handleSaveToDo}
-            className="bg-purple-600 hover:bg-purple-700 text-white p-2  border border-purple-700 rounded">
+            className="bg-blue-600 hover:bg-blue-700 text-white p-2  border border-blue-700 rounded">
             <CgAddR className="text-xl" />
           </button>
           <button className="text-white cursor-pointer bg-red-500 border border-red-600 hover:bg-red-700 rounded flex justify-center items-center p-1.5">
@@ -177,8 +177,8 @@ const ToDo = () => {
                       <p
                         className={`text-xl font-bold  ${
                           toDoList.didTask
-                            ? "line-through text-purple-400"
-                            : "text-purple-900"
+                            ? "line-through text-gray-500"
+                            : "text-gray-800"
                         }`}>
                         {toDoList.toDoText}
                       </p>

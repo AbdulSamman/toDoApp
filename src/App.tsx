@@ -47,7 +47,7 @@ function App() {
 
             <button
               onClick={handleUserName}
-              className="bg-purple-500 hover:bg-purple-700 text-gray-200 font-bold border border-purple-700 rounded p-2 px-4 ml-2 text-purple-900">
+              className="bg-blue-500 hover:bg-blue-700 text-gray-700 font-bold border border-blue-700 rounded p-2 px-4 ml-2 text-blue-900">
               Begin
             </button>
           </>
